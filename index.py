@@ -130,13 +130,11 @@ populationForLanguage = populationForLanguage.sort_values("Population", ascendin
 
 # Largest country per region
 
-continentMaxSurface = df.groupby(["Region"])["Surface"].max()
-countriesMaxSurface = []
-
-for i in range(0, df["Region"].nunique()):
-    for j in range(0, df.shape[0]):
-        if(continentMaxSurface[i] == df.iloc[j]["Surface"]):
-            print("Largest country from {} is {}".format(df.iloc[j]["Region"], df.iloc[j]["Country"]))
+largestCountryPerRegion = df.loc[df.groupby(['Region'])['Surface'].idxmax()].reset_index(drop=True)
+plt.pie(x=largestCountryPerRegion["Surface"], labels=largestCountryPerRegion["Country"], autopct="%.2f%%")
+plt.title("Largest country per region")
+plt.axis("equal")
+plt.show()
 
 # Islands that are not dependents countries
 
